@@ -1,0 +1,596 @@
+/* =====================================================
+   SP09 AudioLab
+   Professional Dark Audio Console UI
+   3-Band Parametric EQ
+   ===================================================== */
+
+:root {
+    --bg: #14161b;
+    --panel: #1d2027;
+    --panel2: #242833;
+    --inset: #0b0c0f;
+
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+
+    --text: #edeef0;
+    --dim: #8a8f98;
+    --faint: #565b66;
+
+    --amber: #e8a33d;
+    --cyan: #52d9c7;
+    --red: #e8604a;
+}
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(
+            ellipse at 30% -10%,
+            rgba(232,163,61,0.05),
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 90% 10%,
+            rgba(82,217,199,0.04),
+            transparent 40%
+        ),
+        var(--bg);
+
+    color: var(--text);
+    min-height: 100vh;
+
+    padding: 22px;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+    width: 100%;
+    max-width: 1040px;
+
+    margin: 0 auto 14px;
+
+    padding: 18px 22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #22252d,
+            #1a1c22
+        );
+
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.03) inset,
+        0 8px 24px rgba(0,0,0,0.35);
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 800;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+
+    margin-bottom: 4px;
+}
+
+header h1::first-letter {
+    color: var(--amber);
+}
+
+header p {
+    color: var(--faint);
+
+    font-size: 11px;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+}
+
+/* =========================
+   MAIN
+   ========================= */
+
+main {
+    width: 100%;
+    max-width: 1040px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+/* =========================
+   CARD
+   ========================= */
+
+.card {
+    width: 100%;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    padding: 16px;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.25);
+}
+
+.card h2 {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.11em;
+
+    color: var(--dim);
+
+    margin-bottom: 14px;
+}
+
+/* =========================
+   AUDIO INPUT
+   ========================= */
+
+#audioFile {
+    width: 100%;
+
+    padding: 10px;
+
+    background: var(--panel2);
+
+    color: var(--dim);
+
+    border: 1px solid var(--border2);
+
+    border-radius: 3px;
+
+    margin-bottom: 10px;
+
+    font-size: 12px;
+}
+
+.buttons {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+
+    font-weight: 700;
+
+    font-size: 11px;
+
+    background: var(--panel2);
+
+    color: var(--dim);
+
+    border: 1px solid var(--border2);
+
+    padding: 9px 14px;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+
+    transition: 0.15s ease;
+}
+
+button:hover {
+    color: var(--text);
+
+    border-color: var(--dim);
+
+    background: #2b303a;
+}
+
+/* Play */
+
+#playBtn {
+    background:
+        linear-gradient(
+            180deg,
+            #3a2e17,
+            #2a2110
+        );
+
+    border-color: var(--amber);
+
+    color: var(--amber);
+}
+
+#playBtn:hover {
+    background: #403119;
+}
+
+/* Stop */
+
+#stopBtn {
+    background:
+        linear-gradient(
+            180deg,
+            #3a211d,
+            #2a1815
+        );
+
+    border-color: var(--red);
+
+    color: var(--red);
+}
+
+#stopBtn:hover {
+    background: #44221c;
+}
+
+/* =========================
+   AUDIO PLAYER
+   ========================= */
+
+audio {
+    display: block;
+
+    width: 100%;
+
+    height: 38px;
+
+    margin-top: 4px;
+}
+
+/* =========================
+   SPECTRUM
+   ========================= */
+
+.spectrum-card {
+    width: 100%;
+}
+
+#spectrum {
+    display: block;
+
+    width: 100%;
+
+    height: 360px;
+
+    background: var(--inset);
+
+    border: 1px solid rgba(0,0,0,0.7);
+
+    border-radius: 3px;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,0.7),
+        inset 0 0 2px rgba(232,163,61,0.15);
+}
+
+/* =========================
+   EQUALIZER
+   3 BANDS
+   ========================= */
+
+.eq-band {
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+
+    border-radius: 4px;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.eq-band:last-child {
+    margin-bottom: 0;
+}
+
+.eq-band h3 {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: var(--dim);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.1em;
+
+    margin-bottom: 12px;
+}
+
+/* =========================
+   EQ LABELS
+   ========================= */
+
+.eq-band label {
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        60px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 14px 0;
+
+    color: var(--dim);
+
+    font-size: 11px;
+}
+
+.eq-band label span {
+    text-align: right;
+
+    color: var(--amber);
+
+    font-family: monospace;
+
+    font-size: 11px;
+}
+
+/* =========================
+   RANGE SLIDERS
+   ========================= */
+
+input[type="range"] {
+    width: 100%;
+
+    cursor: pointer;
+
+    accent-color: var(--amber);
+}
+
+/* Chrome / Edge */
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #264942,
+            #3b3f47 50%,
+            #5c4522
+        );
+
+    border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+
+    width: 15px;
+    height: 15px;
+
+    margin-top: -5.5px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #f0d9ae,
+            var(--amber) 65%
+        );
+
+    border: 1px solid #8a6a2a;
+
+    box-shadow:
+        0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Firefox */
+
+input[type="range"]::-moz-range-track {
+    height: 4px;
+
+    background: #3b3f47;
+
+    border-radius: 3px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: var(--amber);
+
+    border: 1px solid #8a6a2a;
+}
+
+/* =========================
+   NOISE REDUCTION
+   ========================= */
+
+#noiseBtn {
+    width: 100%;
+
+    margin: 0;
+
+    padding: 12px;
+
+    background: var(--panel2);
+
+    border: 1px solid var(--border2);
+
+    color: var(--dim);
+}
+
+#noiseBtn:hover {
+    border-color: var(--cyan);
+
+    color: var(--cyan);
+}
+
+#noiseBtn.active {
+    background:
+        linear-gradient(
+            180deg,
+            #173832,
+            #102621
+        );
+
+    border-color: var(--cyan);
+
+    color: var(--cyan);
+}
+
+/* =========================
+   PRESETS
+   ========================= */
+
+.presets {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.presets button {
+    flex: 1;
+
+    min-width: 110px;
+}
+
+.presets button:hover {
+    border-color: var(--cyan);
+
+    color: var(--cyan);
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    width: 100%;
+
+    max-width: 1040px;
+
+    margin: 18px auto 0;
+
+    text-align: center;
+
+    color: var(--faint);
+
+    font-family: monospace;
+
+    font-size: 10px;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 12px 10px 35px;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 21px;
+
+        line-height: 1.2;
+    }
+
+    header p {
+        font-size: 9px;
+    }
+
+    main {
+        gap: 10px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    #spectrum {
+        height: 280px;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+    }
+
+    .buttons button {
+        flex: 1;
+    }
+
+    .eq-band label {
+        grid-template-columns:
+            55px
+            1fr
+            50px;
+
+        gap: 7px;
+    }
+
+    .presets {
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .presets button {
+        min-width: 0;
+    }
+}

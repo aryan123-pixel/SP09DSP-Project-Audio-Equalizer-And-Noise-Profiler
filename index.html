@@ -1,0 +1,221 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SP09 - AudioLab</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>AudioLab</h1>
+    <p>Real-Time Parametric Equalizer & Noise Reduction</p>
+</header>
+
+<main>
+
+    <!-- AUDIO INPUT -->
+    <section class="card">
+        <h2>Audio Input</h2>
+
+        <input type="file" id="audioFile" accept="audio/*">
+
+        <div class="buttons">
+            <button id="playBtn">▶ Play</button>
+            <button id="stopBtn">■ Stop</button>
+        </div>
+
+        <audio id="audioPlayer" controls></audio>
+    </section>
+
+
+    <!-- FREQUENCY SPECTRUM -->
+    <section class="card spectrum-card">
+        <h2>Frequency Spectrum</h2>
+
+        <canvas id="spectrum"></canvas>
+    </section>
+
+
+    <!-- EQ PRESETS -->
+    <section class="card">
+        <h2>Equalizer Presets</h2>
+
+        <div class="presets">
+            <button>Flat</button>
+            <button>Bass Boost</button>
+            <button>Vocal</button>
+            <button>Rock</button>
+            <button>Treble Boost</button>
+        </div>
+    </section>
+
+
+    <!-- PARAMETRIC EQUALIZER -->
+    <section class="card">
+        <h2>Parametric Equalizer</h2>
+
+        <!-- BAND 1 -->
+        <div class="eq-band">
+
+            <h3>Band 1 — Low</h3>
+
+            <label>
+                Frequency
+                <input
+                    type="range"
+                    id="freq1"
+                    min="50"
+                    max="500"
+                    value="120"
+                >
+                <span id="freq1Value">120 Hz</span>
+            </label>
+
+            <label>
+                Gain
+                <input
+                    type="range"
+                    id="gain1"
+                    min="-12"
+                    max="12"
+                    value="0"
+                >
+                <span id="gain1Value">0 dB</span>
+            </label>
+
+            <label>
+                Q
+                <input
+                    type="range"
+                    id="q1"
+                    min="0.1"
+                    max="10"
+                    step="0.1"
+                    value="1"
+                >
+                <span id="q1Value">1.0</span>
+            </label>
+
+        </div>
+
+
+        <!-- BAND 2 -->
+        <div class="eq-band">
+
+            <h3>Band 2 — Mid</h3>
+
+            <label>
+                Frequency
+                <input
+                    type="range"
+                    id="freq2"
+                    min="250"
+                    max="4000"
+                    value="1000"
+                >
+                <span id="freq2Value">1000 Hz</span>
+            </label>
+
+            <label>
+                Gain
+                <input
+                    type="range"
+                    id="gain2"
+                    min="-12"
+                    max="12"
+                    value="0"
+                >
+                <span id="gain2Value">0 dB</span>
+            </label>
+
+            <label>
+                Q
+                <input
+                    type="range"
+                    id="q2"
+                    min="0.1"
+                    max="10"
+                    step="0.1"
+                    value="1"
+                >
+                <span id="q2Value">1.0</span>
+            </label>
+
+        </div>
+
+
+        <!-- BAND 3 -->
+        <div class="eq-band">
+
+            <h3>Band 3 — High</h3>
+
+            <label>
+                Frequency
+                <input
+                    type="range"
+                    id="freq3"
+                    min="2000"
+                    max="12000"
+                    value="5000"
+                >
+                <span id="freq3Value">5000 Hz</span>
+            </label>
+
+            <label>
+                Gain
+                <input
+                    type="range"
+                    id="gain3"
+                    min="-12"
+                    max="12"
+                    value="0"
+                >
+                <span id="gain3Value">0 dB</span>
+            </label>
+
+            <label>
+                Q
+                <input
+                    type="range"
+                    id="q3"
+                    min="0.1"
+                    max="10"
+                    step="0.1"
+                    value="1"
+                >
+                <span id="q3Value">1.0</span>
+            </label>
+
+        </div>
+
+    </section>
+
+
+    <!-- NOISE REDUCTION -->
+    <section class="card">
+
+        <h2>Noise Reduction</h2>
+
+        <button id="noiseBtn">
+            Noise Reduction: OFF
+        </button>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>SP09 Signal Processing Project</p>
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
+```
