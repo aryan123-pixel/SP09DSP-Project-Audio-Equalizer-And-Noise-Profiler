@@ -671,6 +671,15 @@ footer{
   .presets button{
     min-width:0;
   }
+  #spectrumInfo{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  justify-content:center;
+  align-items:center;
+  gap:12px !important;
+  white-space:nowrap;
+  font-size:10px;
+}
 }
 
 /* =========================
