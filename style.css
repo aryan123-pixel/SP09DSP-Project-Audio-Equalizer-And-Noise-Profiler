@@ -1,596 +1,665 @@
-/* =====================================================
-   SP09 AudioLab
-   Professional Dark Audio Console UI
-   3-Band Parametric EQ
-   ===================================================== */
+:root{
+  --bg:#111318;
+  --panel:#191c22;
+  --panel2:#22262e;
+  --inset:#090b0f;
 
-:root {
-    --bg: #14161b;
-    --panel: #1d2027;
-    --panel2: #242833;
-    --inset: #0b0c0f;
+  --border:rgba(255,255,255,.08);
+  --border2:rgba(255,255,255,.14);
 
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.15);
+  --text:#eeeeee;
+  --dim:#969ba5;
+  --faint:#646a75;
 
-    --text: #edeef0;
-    --dim: #8a8f98;
-    --faint: #565b66;
-
-    --amber: #e8a33d;
-    --cyan: #52d9c7;
-    --red: #e8604a;
+  --amber:#e8a33d;
+  --cyan:#52d9c7;
+  --red:#e8604a;
 }
 
-/* =========================
-   RESET
-   ========================= */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html,
-body {
-    min-height: 100%;
+body{
+  min-height:100%;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(
-            ellipse at 30% -10%,
-            rgba(232,163,61,0.05),
-            transparent 45%
-        ),
-        radial-gradient(
-            ellipse at 90% 10%,
-            rgba(82,217,199,0.04),
-            transparent 40%
-        ),
-        var(--bg);
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  padding:24px 20px 40px;
 
-    color: var(--text);
-    min-height: 100vh;
+  background:
+    radial-gradient(
+      ellipse at 25% -10%,
+      rgba(232,163,61,.055),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 90% 5%,
+      rgba(82,217,199,.045),
+      transparent 40%
+    ),
+    var(--bg);
+}
 
-    padding: 22px;
+/* =========================
+   CONTAINER
+========================= */
+
+header,
+main,
+footer{
+  width:100%;
+  max-width:1040px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 /* =========================
    HEADER
-   ========================= */
+========================= */
 
-header {
-    width: 100%;
-    max-width: 1040px;
+header{
+  margin-bottom:16px;
+  padding:20px 24px;
 
-    margin: 0 auto 14px;
+  background:linear-gradient(
+    180deg,
+    #242831 0%,
+    #1a1d24 100%
+  );
 
-    padding: 18px 22px;
+  border:1px solid var(--border2);
+  border-radius:6px;
 
-    background:
-        linear-gradient(
-            180deg,
-            #22252d,
-            #1a1c22
-        );
-
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.03) inset,
-        0 8px 24px rgba(0,0,0,0.35);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.035) inset,
+    0 10px 28px rgba(0,0,0,.32);
 }
 
-header h1 {
-    font-size: 28px;
-    font-weight: 800;
-
-    letter-spacing: 0.06em;
-
-    text-transform: uppercase;
-
-    margin-bottom: 4px;
+header h1{
+  font-size:29px;
+  font-weight:800;
+  letter-spacing:.065em;
+  text-transform:uppercase;
+  margin-bottom:6px;
 }
 
-header h1::first-letter {
-    color: var(--amber);
+header h1::first-letter{
+  color:var(--amber);
 }
 
-header p {
-    color: var(--faint);
-
-    font-size: 11px;
-
-    letter-spacing: 0.1em;
-
-    text-transform: uppercase;
+header p{
+  color:var(--faint);
+  font-size:11px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
 }
 
 /* =========================
    MAIN
-   ========================= */
+========================= */
 
-main {
-    width: 100%;
-    max-width: 1040px;
-
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 14px;
+main{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
 
 /* =========================
-   CARD
-   ========================= */
+   CARDS
+========================= */
 
-.card {
-    width: 100%;
+.card{
+  width:100%;
 
-    background: var(--panel);
+  background:var(--panel);
 
-    border: 1px solid var(--border);
+  border:1px solid var(--border);
+  border-radius:6px;
 
-    border-radius: 4px;
+  padding:18px;
 
-    padding: 16px;
-
-    box-shadow:
-        0 8px 24px rgba(0,0,0,0.25);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.22);
 }
 
-.card h2 {
-    font-size: 12px;
+.card h2{
+  font-size:12px;
+  font-weight:700;
 
-    font-weight: 700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
 
-    text-transform: uppercase;
+  color:var(--dim);
 
-    letter-spacing: 0.11em;
+  margin-bottom:15px;
 
-    color: var(--dim);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    margin-bottom: 14px;
+.card h2::before{
+  content:"";
+
+  width:3px;
+  height:13px;
+
+  background:var(--amber);
+  border-radius:2px;
 }
 
 /* =========================
    AUDIO INPUT
-   ========================= */
+========================= */
 
-#audioFile {
-    width: 100%;
+#audioFile{
+  width:100%;
 
-    padding: 10px;
+  padding:11px;
 
-    background: var(--panel2);
+  background:var(--panel2);
+  color:var(--dim);
 
-    color: var(--dim);
+  border:1px solid var(--border2);
+  border-radius:4px;
 
-    border: 1px solid var(--border2);
+  margin-bottom:11px;
 
-    border-radius: 3px;
-
-    margin-bottom: 10px;
-
-    font-size: 12px;
+  font-size:12px;
 }
 
-.buttons {
-    display: flex;
-
-    gap: 8px;
-
-    margin-bottom: 8px;
+#audioFile:hover{
+  border-color:rgba(255,255,255,.22);
 }
 
 /* =========================
    BUTTONS
-   ========================= */
+========================= */
 
-button {
-    font-family: Arial, Helvetica, sans-serif;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.08em;
-
-    font-weight: 700;
-
-    font-size: 11px;
-
-    background: var(--panel2);
-
-    color: var(--dim);
-
-    border: 1px solid var(--border2);
-
-    padding: 9px 14px;
-
-    border-radius: 3px;
-
-    cursor: pointer;
-
-    transition: 0.15s ease;
+.buttons{
+  display:flex;
+  gap:9px;
+  margin-bottom:9px;
 }
 
-button:hover {
-    color: var(--text);
+button{
+  font-family:Arial,Helvetica,sans-serif;
 
-    border-color: var(--dim);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:700;
+  font-size:11px;
 
-    background: #2b303a;
+  background:var(--panel2);
+  color:var(--dim);
+
+  border:1px solid var(--border2);
+  padding:10px 15px;
+  border-radius:4px;
+
+  cursor:pointer;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    color .15s ease,
+    transform .1s ease;
 }
 
-/* Play */
-
-#playBtn {
-    background:
-        linear-gradient(
-            180deg,
-            #3a2e17,
-            #2a2110
-        );
-
-    border-color: var(--amber);
-
-    color: var(--amber);
+button:hover{
+  color:var(--text);
+  border-color:rgba(255,255,255,.28);
+  background:#2a2f39;
 }
 
-#playBtn:hover {
-    background: #403119;
+button:active{
+  transform:translateY(1px);
 }
 
-/* Stop */
+/* =========================
+   PLAY
+========================= */
 
-#stopBtn {
-    background:
-        linear-gradient(
-            180deg,
-            #3a211d,
-            #2a1815
-        );
+#playBtn{
+  background:linear-gradient(
+    180deg,
+    #3b301b,
+    #29210f
+  );
 
-    border-color: var(--red);
-
-    color: var(--red);
+  border-color:var(--amber);
+  color:var(--amber);
 }
 
-#stopBtn:hover {
-    background: #44221c;
+#playBtn:hover{
+  background:#40331b;
+}
+
+/* =========================
+   STOP
+========================= */
+
+#stopBtn{
+  background:linear-gradient(
+    180deg,
+    #38221e,
+    #281815
+  );
+
+  border-color:var(--red);
+  color:var(--red);
+}
+
+#stopBtn:hover{
+  background:#43231d;
 }
 
 /* =========================
    AUDIO PLAYER
-   ========================= */
+========================= */
 
-audio {
-    display: block;
-
-    width: 100%;
-
-    height: 38px;
-
-    margin-top: 4px;
+audio{
+  display:block;
+  width:100%;
+  height:38px;
+  margin-top:4px;
 }
 
 /* =========================
    SPECTRUM
-   ========================= */
+========================= */
 
-.spectrum-card {
-    width: 100%;
-}
+#spectrum{
+  display:block;
 
-#spectrum {
-    display: block;
+  width:100%;
+  height:380px;
 
-    width: 100%;
+  background:var(--inset);
 
-    height: 360px;
+  border:1px solid rgba(0,0,0,.75);
+  border-radius:4px;
 
-    background: var(--inset);
-
-    border: 1px solid rgba(0,0,0,0.7);
-
-    border-radius: 3px;
-
-    box-shadow:
-        inset 0 0 30px rgba(0,0,0,0.7),
-        inset 0 0 2px rgba(232,163,61,0.15);
-}
-
-/* =========================
-   EQUALIZER
-   3 BANDS
-   ========================= */
-
-.eq-band {
-    background: var(--panel2);
-
-    border: 1px solid var(--border);
-
-    border-radius: 4px;
-
-    padding: 14px;
-
-    margin-bottom: 10px;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.02);
-}
-
-.eq-band:last-child {
-    margin-bottom: 0;
-}
-
-.eq-band h3 {
-    font-size: 12px;
-
-    font-weight: 700;
-
-    color: var(--dim);
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.1em;
-
-    margin-bottom: 12px;
-}
-
-/* =========================
-   EQ LABELS
-   ========================= */
-
-.eq-band label {
-    display: grid;
-
-    grid-template-columns:
-        70px
-        1fr
-        60px;
-
-    align-items: center;
-
-    gap: 10px;
-
-    margin: 14px 0;
-
-    color: var(--dim);
-
-    font-size: 11px;
-}
-
-.eq-band label span {
-    text-align: right;
-
-    color: var(--amber);
-
-    font-family: monospace;
-
-    font-size: 11px;
-}
-
-/* =========================
-   RANGE SLIDERS
-   ========================= */
-
-input[type="range"] {
-    width: 100%;
-
-    cursor: pointer;
-
-    accent-color: var(--amber);
-}
-
-/* Chrome / Edge */
-
-input[type="range"]::-webkit-slider-runnable-track {
-    height: 4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #264942,
-            #3b3f47 50%,
-            #5c4522
-        );
-
-    border-radius: 3px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-
-    width: 15px;
-    height: 15px;
-
-    margin-top: -5.5px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #f0d9ae,
-            var(--amber) 65%
-        );
-
-    border: 1px solid #8a6a2a;
-
-    box-shadow:
-        0 1px 4px rgba(0,0,0,0.5);
-}
-
-/* Firefox */
-
-input[type="range"]::-moz-range-track {
-    height: 4px;
-
-    background: #3b3f47;
-
-    border-radius: 3px;
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
-
-    border-radius: 50%;
-
-    background: var(--amber);
-
-    border: 1px solid #8a6a2a;
-}
-
-/* =========================
-   NOISE REDUCTION
-   ========================= */
-
-#noiseBtn {
-    width: 100%;
-
-    margin: 0;
-
-    padding: 12px;
-
-    background: var(--panel2);
-
-    border: 1px solid var(--border2);
-
-    color: var(--dim);
-}
-
-#noiseBtn:hover {
-    border-color: var(--cyan);
-
-    color: var(--cyan);
-}
-
-#noiseBtn.active {
-    background:
-        linear-gradient(
-            180deg,
-            #173832,
-            #102621
-        );
-
-    border-color: var(--cyan);
-
-    color: var(--cyan);
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,.72),
+    inset 0 0 2px rgba(232,163,61,.16);
 }
 
 /* =========================
    PRESETS
-   ========================= */
+========================= */
 
-.presets {
-    display: flex;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
+.presets{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
 }
 
-.presets button {
-    flex: 1;
-
-    min-width: 110px;
+.presets button{
+  flex:1;
+  min-width:110px;
+  padding:11px 12px;
 }
 
-.presets button:hover {
-    border-color: var(--cyan);
+.presets button:hover{
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
 
-    color: var(--cyan);
+/* Selected preset support */
+
+.presets button.active{
+  background:linear-gradient(
+    180deg,
+    #173832,
+    #102621
+  );
+
+  border-color:var(--cyan);
+  color:var(--cyan);
+
+  box-shadow:
+    0 0 0 1px rgba(82,217,199,.08) inset;
+}
+
+/* =========================
+   PARAMETRIC EQ
+========================= */
+
+.eq-band{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.025),
+      rgba(255,255,255,.008)
+    ),
+    var(--panel2);
+
+  border:1px solid var(--border);
+  border-radius:5px;
+
+  padding:15px;
+
+  margin-bottom:11px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.eq-band:last-child{
+  margin-bottom:0;
+}
+
+.eq-band h3{
+  font-size:12px;
+  font-weight:700;
+
+  color:var(--dim);
+
+  text-transform:uppercase;
+  letter-spacing:.1em;
+
+  margin-bottom:13px;
+}
+
+.eq-band label{
+  display:grid;
+
+  grid-template-columns:72px minmax(0,1fr) 64px;
+
+  align-items:center;
+
+  gap:11px;
+
+  margin:15px 0;
+
+  color:var(--dim);
+  font-size:11px;
+}
+
+.eq-band label:last-child{
+  margin-bottom:2px;
+}
+
+.eq-band label span{
+  text-align:right;
+
+  color:var(--amber);
+
+  font-family:monospace;
+  font-size:11px;
+
+  white-space:nowrap;
+}
+
+/* =========================
+   RANGE SLIDERS
+========================= */
+
+input[type=range]{
+  width:100%;
+  cursor:pointer;
+  accent-color:var(--amber);
+}
+
+/* Chrome / Edge / Safari */
+
+input[type=range]::-webkit-slider-runnable-track{
+  height:4px;
+
+  background:linear-gradient(
+    90deg,
+    #264942,
+    #3b3f47 50%,
+    #5c4522
+  );
+
+  border-radius:3px;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+
+  width:15px;
+  height:15px;
+
+  margin-top:-5.5px;
+
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle at 35% 30%,
+    #f0d9ae,
+    var(--amber) 65%
+  );
+
+  border:1px solid #8a6a2a;
+
+  box-shadow:
+    0 1px 4px rgba(0,0,0,.5);
+}
+
+/* Firefox */
+
+input[type=range]::-moz-range-track{
+  height:4px;
+
+  background:linear-gradient(
+    90deg,
+    #264942,
+    #3b3f47 50%,
+    #5c4522
+  );
+
+  border-radius:3px;
+}
+
+input[type=range]::-moz-range-thumb{
+  width:15px;
+  height:15px;
+
+  border-radius:50%;
+
+  background:var(--amber);
+
+  border:1px solid #8a6a2a;
+
+  box-shadow:
+    0 1px 4px rgba(0,0,0,.5);
+}
+
+/* =========================
+   NOISE REDUCTION
+========================= */
+
+#noiseBtn,
+#exportBtn{
+  width:100%;
+  margin:0;
+  padding:12px;
+}
+
+#noiseBtn{
+  background:var(--panel2);
+
+  border:1px solid var(--border2);
+
+  color:var(--dim);
+}
+
+#noiseBtn:hover{
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+#noiseBtn.active{
+  background:linear-gradient(
+    180deg,
+    #173832,
+    #102621
+  );
+
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+/* =========================
+   EXPORT
+========================= */
+
+#exportBtn{
+  margin-bottom:10px;
+
+  background:linear-gradient(
+    180deg,
+    #173832,
+    #102621
+  );
+
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+#exportBtn:hover{
+  background:#1c443d;
+}
+
+#exportBtn.recording{
+  background:linear-gradient(
+    180deg,
+    #3a211d,
+    #2a1815
+  );
+
+  border-color:var(--red);
+  color:var(--red);
+}
+
+#exportStatus{
+  text-align:center;
+
+  color:var(--faint);
+
+  font-family:monospace;
+  font-size:10px;
+
+  margin-top:5px;
 }
 
 /* =========================
    FOOTER
-   ========================= */
+========================= */
 
-footer {
-    width: 100%;
+footer{
+  margin-top:20px;
 
-    max-width: 1040px;
+  text-align:center;
 
-    margin: 18px auto 0;
+  color:var(--faint);
 
-    text-align: center;
-
-    color: var(--faint);
-
-    font-family: monospace;
-
-    font-size: 10px;
+  font-family:monospace;
+  font-size:10px;
 }
 
 /* =========================
    MOBILE
-   ========================= */
+========================= */
 
-@media (max-width: 700px) {
+@media(max-width:700px){
 
-    body {
-        padding: 12px 10px 35px;
-    }
+  body{
+    padding:12px 10px 30px;
+  }
 
-    header {
-        padding: 15px;
-    }
+  header{
+    padding:16px;
+    margin-bottom:11px;
+  }
 
-    header h1 {
-        font-size: 21px;
+  header h1{
+    font-size:22px;
+    line-height:1.2;
+  }
 
-        line-height: 1.2;
-    }
+  header p{
+    font-size:9px;
+    line-height:1.5;
+  }
 
-    header p {
-        font-size: 9px;
-    }
+  main{
+    gap:11px;
+  }
 
-    main {
-        gap: 10px;
-    }
+  .card{
+    padding:13px;
+  }
 
-    .card {
-        padding: 12px;
-    }
+  #spectrum{
+    height:280px;
+  }
 
-    #spectrum {
-        height: 280px;
-    }
+  .buttons{
+    flex-wrap:wrap;
+  }
 
-    .buttons {
-        flex-wrap: wrap;
-    }
+  .buttons button{
+    flex:1;
+    min-width:100px;
+  }
 
-    .buttons button {
-        flex: 1;
-    }
+  .eq-band{
+    padding:13px;
+  }
 
-    .eq-band label {
-        grid-template-columns:
-            55px
-            1fr
-            50px;
+  .eq-band label{
+    grid-template-columns:55px minmax(0,1fr) 52px;
+    gap:7px;
+    margin:14px 0;
+  }
 
-        gap: 7px;
-    }
+  .presets{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
 
-    .presets {
-        display: grid;
+  .presets button{
+    min-width:0;
+  }
+}
 
-        grid-template-columns:
-            1fr
-            1fr;
-    }
+/* =========================
+   SMALL PHONES
+========================= */
 
-    .presets button {
-        min-width: 0;
-    }
+@media(max-width:400px){
+
+  body{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  header h1{
+    font-size:20px;
+  }
+
+  .eq-band label{
+    grid-template-columns:50px minmax(0,1fr) 48px;
+    gap:6px;
+  }
+
+  .eq-band label span{
+    font-size:10px;
+  }
+
+  #spectrum{
+    height:250px;
+  }
 }
