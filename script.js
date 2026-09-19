@@ -39,7 +39,8 @@ if (!spectrumInfo) {
         "margin:10px 5px 12px 65px;" +
         "font-family:Arial,sans-serif;" +
         "font-size:13px;color:#c5ccd8;" +
-        "display:flex;gap:25px;flex-wrap:wrap;";
+        "display:flex;gap:25px;flex-wrap:nowrap;" +
+        "align-items:center;justify-content:center;white-space:nowrap;";
 
     if (canvas && canvas.parentElement) {
         canvas.parentElement.insertBefore(spectrumInfo, canvas);
