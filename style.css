@@ -206,7 +206,7 @@ button{
 
   cursor:pointer;
 
-  transition:
+  transition:tion
     background .15s ease,
     border-color .15s ease,
     color .15s ease,
@@ -613,7 +613,45 @@ footer{
     flex:1;
     min-width:100px;
   }
+  #noiseBtn,
+  #exportBtn{
+    width:100%;
+    padding:12px;
+    -webkit-appearance:none;
+    appearance:none;
+  }
 
+  #exportBtn{
+    background:linear-gradient(
+      180deg,
+      #173832,
+      #102621
+    );
+    border:1px solid var(--cyan);
+    color:var(--cyan);
+  }
+
+  #exportBtn:hover{
+    background:#1c443d;
+    border-color:var(--cyan);
+    color:var(--cyan);
+  }
+
+  #noiseBtn{
+    background:var(--panel2);
+    border:1px solid var(--border2);
+    color:var(--dim);
+  }
+
+  #noiseBtn.active{
+    background:linear-gradient(
+      180deg,
+      #173832,
+      #102621
+    );
+    border-color:var(--cyan);
+    color:var(--cyan);
+  }
   .eq-band{
     padding:13px;
   }
