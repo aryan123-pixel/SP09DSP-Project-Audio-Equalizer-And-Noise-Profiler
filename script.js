@@ -360,19 +360,30 @@ function updateDisplays(band) {
 
 bands.forEach(updateDisplays);
 
+let currentObjectURL = null;
+
 audioFile.addEventListener(
     "change",
     function () {
-        const file = this.files[0];
+        const file = this.files && this.files[0];
 
         if (!file) {
             return;
         }
 
-        const url =
-            URL.createObjectURL(file);
+        console.log(
+            "Selected audio:",
+            file.name,
+            file.type,
+            file.size
+        );
 
-        audioPlayer.pause();
+        // Stop and completely reset the previous media element.
+        try {
+            audioPlayer.pause();
+        } catch (error) {
+            console.warn("Pause reset warning:", error);
+        }
 
         spectrumAudioActive = false;
         spectrumFrozen = false;
@@ -390,16 +401,45 @@ audioFile.addEventListener(
 
         originalHoverFrequency = null;
         originalHoverAmplitude = null;
-
         processedHoverFrequency = null;
         processedHoverAmplitude = null;
-
         originalMouseInside = false;
         processedMouseInside = false;
 
-        audioPlayer.currentTime = 0;
-        audioPlayer.src = url;
+        // Release the previous temporary URL.
+        if (currentObjectURL) {
+            URL.revokeObjectURL(currentObjectURL);
+            currentObjectURL = null;
+        }
+
+        // Create a fresh object URL and explicitly reload the media element.
+        currentObjectURL = URL.createObjectURL(file);
+
+        audioPlayer.removeAttribute("src");
         audioPlayer.load();
+
+        audioPlayer.src = currentObjectURL;
+        audioPlayer.load();
+
+        // Useful diagnostics and ensures the native player receives metadata.
+        audioPlayer.onloadedmetadata = function () {
+            console.log(
+                "Audio metadata loaded. Duration:",
+                audioPlayer.duration,
+                "seconds"
+            );
+        };
+
+        audioPlayer.oncanplay = function () {
+            console.log("Audio is ready to play.");
+        };
+
+        audioPlayer.onerror = function () {
+            console.error(
+                "Audio loading error:",
+                audioPlayer.error
+            );
+        };
     }
 );
 
@@ -450,7 +490,13 @@ function createEQFilters(context) {
         const filter =
             context.createBiquadFilter();
 
-        filter.type = "peaking";
+        if (i === 0) {
+            filter.type = "lowshelf";
+        } else if (i === 2) {
+            filter.type = "highshelf";
+        } else {
+            filter.type = "peaking";
+        }
 
         filter.frequency.value =
             Number(c.freq.value);
@@ -705,27 +751,27 @@ const presets = {
     ],
 
     "Bass Boost": [
-        [100, 8, 0.8],
-        [800, 2, 1],
+        [100, 10, 1],
+        [800, -2, 1],
         [5000, 1, 1]
     ],
 
     "Vocal": [
-        [150, -3, 1],
-        [1200, 6, 1.2],
-        [5000, 3, 1]
+        [200, -4, 1],
+        [2500, 6, 1],
+        [8000, 3, 1]
     ],
 
     "Rock": [
-        [100, 6, 0.8],
-        [1000, -2, 1],
-        [6000, 6, 0.9]
+        [120, 6, 1],
+        [800, -4, 1],
+        [6000, 7, 1]
     ],
 
     "Treble Boost": [
-        [150, 0, 1],
-        [1500, 2, 1],
-        [7000, 8, 0.8]
+        [200, 0, 1],
+        [2000, 2, 1],
+        [6000, 8, 1]
     ]
 };
 
@@ -797,22 +843,70 @@ presetButtons.forEach((button) => {
 });
 
 async function startPlayback() {
+    if (!audioFile || !audioFile.files || !audioFile.files[0]) {
+        alert(
+            "Please select an audio file first."
+        );
+        return;
+    }
+
     if (!audioPlayer.src) {
         alert(
             "Please select an audio file first."
         );
-
         return;
     }
 
-    setupAudio();
+    // Wait briefly for metadata if the browser is still loading the file.
+    if (audioPlayer.readyState < 1) {
+        audioPlayer.load();
+
+        await new Promise((resolve, reject) => {
+            let finished = false;
+
+            const cleanup = () => {
+                audioPlayer.removeEventListener("loadedmetadata", onReady);
+                audioPlayer.removeEventListener("error", onError);
+            };
+
+            const onReady = () => {
+                if (finished) return;
+                finished = true;
+                cleanup();
+                resolve();
+            };
+
+            const onError = () => {
+                if (finished) return;
+                finished = true;
+                cleanup();
+                reject(audioPlayer.error || new Error("Audio could not be loaded."));
+            };
+
+            audioPlayer.addEventListener("loadedmetadata", onReady, { once: true });
+            audioPlayer.addEventListener("error", onError, { once: true });
+        });
+    }
+
+    if (!audioStarted) {
+        setupAudio();
+    }
 
     if (
         audioContext &&
-        audioContext.state ===
-            "suspended"
+        audioContext.state === "suspended"
     ) {
         await audioContext.resume();
+    }
+
+    if (
+        audioPlayer.ended ||
+        (
+            Number.isFinite(audioPlayer.duration) &&
+            audioPlayer.currentTime >= audioPlayer.duration
+        )
+    ) {
+        audioPlayer.currentTime = 0;
     }
 
     spectrumStopped = false;
@@ -882,7 +976,11 @@ stopBtn.addEventListener(
     function () {
         audioPlayer.pause();
 
-        audioPlayer.currentTime = 0;
+        try {
+            audioPlayer.currentTime = 0;
+        } catch (error) {
+            console.warn("Could not reset audio position:", error);
+        }
 
         spectrumAudioActive = false;
         spectrumFrozen = false;
